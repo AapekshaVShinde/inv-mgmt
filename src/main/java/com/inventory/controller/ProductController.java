@@ -5,6 +5,7 @@ import com.inventory.dto.request.ProductRequest;
 import com.inventory.dto.response.ProductResponse;
 import com.inventory.entity.Product;
 import com.inventory.service.ProductService;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -15,18 +16,19 @@ import java.math.BigDecimal;
 @RestController
 @RequestMapping(CommonConstants.ApiPaths.BASE_API_PATH_WITH_VERSION + "/products")
 @RequiredArgsConstructor
+//@Hidden
 public class ProductController {
 
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<Page<Product>> getAllProducts(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<ProductResponse>> getAllProducts(@RequestParam(defaultValue = "0") int page,
                                                         @RequestParam(defaultValue = "10") int size) {
         return ResponseEntity.ok(productService.getAllProducts(page, size));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+    public ResponseEntity<ProductResponse> getProductById(@PathVariable Long id) {
         return ResponseEntity.ok(productService.getProductById(id));
     }
 

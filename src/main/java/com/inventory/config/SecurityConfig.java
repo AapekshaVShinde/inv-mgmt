@@ -29,13 +29,16 @@ public class SecurityConfig {
     }
 
     // Publicly accessible endpoints (Swagger + Auth)
-    public static final String[] PUBLIC_ENDPOINTS = {
-            "/api/swagger-resources/**",
-            "/api/swagger-ui/**",
-            "/api/swagger-ui.html",
-            "/api/api-docs/**",
-            CommonConstants.ApiPaths.BASE_API_PATH_WITH_VERSION + "/auth/**",
-    };
+//    public static final String[] PUBLIC_ENDPOINTS = {
+//            "/api/swagger-resources/**",
+//            "/api/swagger-ui/**",
+//            "/api/swagger-ui.html",
+//            "/api/api-docs/**",
+//            CommonConstants.ApiPaths.BASE_API_PATH_WITH_VERSION + "/auth/**"
+//    };
+
+    public static final String[] PUBLIC_ENDPOINTS = new String[]{"/swagger-resources/**", "/swagger-ui/**",
+            "/swagger-ui.html", "/swagger-ui/index.html", "/favicon.ico", "/v3/api-docs/**", CommonConstants.ApiPaths.BASE_API_PATH_WITH_VERSION + "/auth/**"};
 
 
     @Bean
@@ -51,10 +54,18 @@ public class SecurityConfig {
                 .build();
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().requestMatchers(PUBLIC_ENDPOINTS);
-    }
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        return (web) -> web.ignoring().requestMatchers(
+//                "/api/api-docs/**",
+//                "/api/swagger-ui/**",
+//                "/api/swagger-ui.html",
+//                "/api/swagger-resources/**",
+//                "/.well-known/**",
+//                CommonConstants.ApiPaths.BASE_API_PATH_WITH_VERSION + "/auth/**"
+//        );
+//    }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

@@ -26,11 +26,17 @@ public class ProductService {
     private final SupplierRepository supplierRepository;
     private final StoreRepository storeRepository;
 
-    public Page<Product> getAllProducts(int page, int size) {
-        return productRepository.findByActiveTrue(PageRequest.of(page, size));
+    public Page<ProductResponse> getAllProducts(int page, int size) {
+        return productRepository.findByActiveTrue(PageRequest.of(page, size))
+                .map(this::mapToResponse);
     }
 
-    public Product getProductById(Long id) {
+    public ProductResponse getProductById(Long id) {
+        Product product = findProductById(id);
+        return mapToResponse(product);
+    }
+
+    private Product findProductById(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new ProductException("PROD001", "Product not found", HttpStatus.NOT_FOUND));
     }
@@ -66,7 +72,7 @@ public class ProductService {
 
     public ProductResponse updateProduct(Long id, ProductRequest productRequest) {
 
-        Product product = getProductById(id);
+        Product product = findProductById(id);
 
         Category category = categoryRepository.findById(productRequest.getCategoryId())
                 .orElseThrow(() -> new ProductException("PROD003", "Category not found", HttpStatus.NOT_FOUND));
@@ -90,7 +96,7 @@ public class ProductService {
     }
 
     public void deleteProduct(Long id) {
-        Product product = getProductById(id);
+        Product product = findProductById(id);
         product.setActive(false); // Soft delete
         productRepository.save(product);
     }

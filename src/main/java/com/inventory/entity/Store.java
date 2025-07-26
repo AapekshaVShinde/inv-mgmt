@@ -1,5 +1,9 @@
 package com.inventory.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,6 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+//@Hidden
 public class Store extends BaseEntity {
 
     @Id
@@ -29,5 +34,6 @@ public class Store extends BaseEntity {
     private boolean active = true;
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = false)
+    @JsonBackReference
     private Set<Product> products;  // <-- NEW: Products available in this store
 }

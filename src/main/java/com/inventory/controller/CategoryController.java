@@ -4,6 +4,7 @@ import com.inventory.constants.CommonConstants;
 import com.inventory.dto.request.CategoryRequest;
 import com.inventory.entity.Category;
 import com.inventory.service.CategoryService;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping(CommonConstants.ApiPaths.BASE_API_PATH_WITH_VERSION + "/categories")
 @RequiredArgsConstructor
+//@Hidden
 public class CategoryController {
 
     private final CategoryService categoryService;

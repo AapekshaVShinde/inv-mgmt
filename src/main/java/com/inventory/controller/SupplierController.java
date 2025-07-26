@@ -3,6 +3,7 @@ package com.inventory.controller;
 import com.inventory.dto.request.SupplierRequest;
 import com.inventory.dto.response.SupplierResponse;
 import com.inventory.service.SupplierService;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/suppliers")
 @RequiredArgsConstructor
+//@Hidden
 public class SupplierController {
 
     private final SupplierService supplierService;

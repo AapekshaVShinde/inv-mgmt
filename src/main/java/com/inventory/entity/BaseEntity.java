@@ -1,5 +1,6 @@
 package com.inventory.entity;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @MappedSuperclass
+//@Hidden
 public abstract class BaseEntity {
 
     @Column(name = "created_at", updatable = false)

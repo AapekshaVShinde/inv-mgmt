@@ -4,6 +4,7 @@ import com.inventory.constants.CommonConstants;
 import com.inventory.dto.request.StoreRequest;
 import com.inventory.dto.response.StoreResponse;
 import com.inventory.service.StoreService;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(CommonConstants.ApiPaths.BASE_API_PATH_WITH_VERSION + "/stores")
 @RequiredArgsConstructor
+//@Hidden
 public class StoreController {
 
     private final StoreService storeService;

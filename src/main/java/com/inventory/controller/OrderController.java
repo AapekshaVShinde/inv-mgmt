@@ -4,6 +4,7 @@ import com.inventory.constants.CommonConstants;
 import com.inventory.dto.request.OrderRequest;
 import com.inventory.dto.response.OrderResponse;
 import com.inventory.service.OrderService;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping(CommonConstants.ApiPaths.BASE_API_PATH_WITH_VERSION + "/orders")
 @RequiredArgsConstructor
+//@Hidden
 public class OrderController {
 
     private final OrderService orderService;

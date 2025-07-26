@@ -1,37 +1,29 @@
 package com.inventory.security;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inventory.config.SecurityConfig;
 import com.inventory.exception.SecurityException;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.server.PathContainer;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
-import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
-import org.springframework.web.util.pattern.PathPattern;
-import org.springframework.web.util.pattern.PathPatternParser;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -102,19 +94,32 @@ public class AuthFilter extends OncePerRequestFilter {
         }
     }
 
+//    @Override
+//    protected boolean shouldNotFilter(HttpServletRequest request) {
+//        String path = request.getRequestURI();
+//        System.out.println("Incoming path: " + path);
+//        AntPathMatcher matcher = new AntPathMatcher();
+//        for (String pattern : SecurityConfig.PUBLIC_ENDPOINTS) {
+//            System.out.println("Matching " + path + " against " + pattern);
+//            if (matcher.match(pattern, path)) {
+//                System.out.println("Matched! Skipping filter");
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        PathPatternParser parser = new PathPatternParser();
-        String path = request.getRequestURI();
-        PathContainer container = PathContainer.parsePath(path);
-
+        List<RequestMatcher> matchers = new ArrayList<>();
         for (String pattern : SecurityConfig.PUBLIC_ENDPOINTS) {
-            PathPattern pathPattern = parser.parse(pattern);
-            if (pathPattern.matches(container)) {
-                return true;
-            }
+            matchers.add(new AntPathRequestMatcher(pattern));
         }
-        return false;
+        RequestMatcher excludeFromFilterRequestMatcher = new OrRequestMatcher(matchers);
+        boolean shouldNotFilter = excludeFromFilterRequestMatcher.matches(request);
+        logger.info("Should Not Filter: " + shouldNotFilter);
+
+        return shouldNotFilter;
     }
 
     private void logExceptionMessage(Exception ex) {

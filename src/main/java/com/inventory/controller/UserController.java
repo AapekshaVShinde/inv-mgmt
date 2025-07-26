@@ -5,6 +5,7 @@ import com.inventory.dto.request.UserUpdateDTO;
 import com.inventory.dto.response.UserResponseDTO;
 import com.inventory.entity.User;
 import com.inventory.service.UserService;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
+//@Hidden
 public class UserController {
 
     private final UserService userService;

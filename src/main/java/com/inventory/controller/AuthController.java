@@ -3,6 +3,7 @@ package com.inventory.controller;
 import com.inventory.dto.request.LoginRequest;
 import com.inventory.dto.response.JwtResponse;
 import com.inventory.service.AuthAppService;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
+//@Hidden
 public class AuthController {
 
     private final AuthAppService authService;
