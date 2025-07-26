@@ -1,0 +1,7 @@
+package com.inventory.repo;
+
+import com.inventory.entity.Order;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface OrderRepository extends JpaRepository<Order, Long> {
+}
